@@ -1,0 +1,46 @@
+/* styles.css */
+
+body {
+  margin: 0;
+  font-family: "Poppins", sans-serif;
+}
+
+.health-page {
+  background-color: #ff4d4d; /* Red background */
+  color: white;
+  min-height: 100vh;
+}
+
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+  padding: 20px;
+  margin-top: 20px;
+}
+
+.box {
+  background-color: white;
+  color: #ff4d4d;
+  width: 40%;
+  height: 20vh; /* Set height to 20% of viewport height */
+  margin: 1% 5%;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.number {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.label {
+  font-size: 1.2rem;
+  font-weight: normal;
+}
