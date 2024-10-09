@@ -1,0 +1,9 @@
+{
+  "version": "1",
+  "name": "LagaaEndpoints",
+  "type": "collection",
+  "ignore": [
+    "node_modules",
+    ".git"
+  ]
+}

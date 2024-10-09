@@ -1,24 +1,53 @@
-version: "3.5"
+version: '3.8'
 
 services:
-  mysql-db:
-    image: mysql:5
+  backend:
+    container_name: dashboard
+    privileged: true
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      database:
+        condition: service_healthy
     ports:
-      - 3306:3306
+      - "8081:8080"
+    networks:
+      - spring-app
+    expose:
+      - "8080"
+
+  database:
+    image: arm64v8/mysql:8.0
+    container_name: mysql_database
+    privileged: true
     environment:
-      MYSQL_ROOT_PASSWORD: test123
-      MYSQL_DATABASE: definitions
+      MYSQL_DATABASE: "wealth"
+      MYSQL_ROOT_PASSWORD: "test123"
+    ports:
+      - "3306:3306"
     volumes:
-      - ./database:/docker-entrypoint-initdb.d
+      - "./database/01-initial-db.sql:/docker-entrypoint-initdb.d/default_data.sql:ro"
+      # - "./database/data:/var/lib/mysql"
+    networks:
+      - spring-app
     healthcheck:
-      test: ["CMD-SHELL", "mysql -ptest123 -e 'select 1'"]
+      test: [ "CMD-SHELL", "mysql -u root -ptest123 -e 'select 1'" ]
       interval: 5s
       retries: 50
 
-  api:
+  proxy:
     image: nginx:latest
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf
     ports:
       - 80:80
       - 443:443
+    networks:
+      - spring-app
+    depends_on:
+      backend:
+        condition: service_started
+
+networks:
+  spring-app:

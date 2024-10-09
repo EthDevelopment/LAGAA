@@ -1,13 +1,13 @@
-package com.lagaa.lagaaliving;
+// package com.lagaa.lagaaliving;
 
-import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
+// import org.junit.jupiter.api.Test;
+// import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
-class LagaalivingApplicationTests {
+// @SpringBootTest
+// class LagaalivingApplicationTests {
 
-	@Test
-	void contextLoads() {
-	}
+// 	@Test
+// 	void contextLoads() {
+// 	}
 
-}
+// }

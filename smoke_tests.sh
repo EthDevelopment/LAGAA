@@ -1,6 +1,6 @@
 #!/bin/bash
 
-BODY=$(curl -s http://localhost:80/dashboards)
+BODY=$(curl -s http://localhost:80/finance)
 FAILED_TESTS=0
 
 LENGTH=$(echo "$BODY" | jq length)
