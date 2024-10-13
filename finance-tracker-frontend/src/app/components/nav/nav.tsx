@@ -8,10 +8,9 @@ const Nav: React.FC = () => {
         <li className="nav-item">
           <Link href="/">Home</Link>
         </li>
-        <li className="nav-item">
+        {/* <li className="nav-item">
           <Link href="/overview">Overview</Link>{" "}
-          {/* Link to the overview page */}
-        </li>
+        </li> */}
         <li className="nav-item">
           <Link href="/finances">Finances</Link>
         </li>

@@ -1,0 +1,17 @@
+meta {
+  name: AddToBalance
+  type: http
+  seq: 3
+}
+
+post {
+  url: http://localhost:8081/api/finances/1/addBalance
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "amount": 1000
+  }
+}

@@ -1,25 +1,34 @@
 package com.lagaa.lagaaliving.controller;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.lagaa.lagaaliving.model.Finance;
-import com.lagaa.lagaaliving.repository.FinanceRepository;
+import com.lagaa.lagaaliving.dto.AmountDTO;  // Import the DTO
+import com.lagaa.lagaaliving.service.FinanceService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
-@CrossOrigin(origins = "http://localhost:3000")
 @RestController
+@RequestMapping("/api/finances")
+@CrossOrigin(origins = "http://localhost:3000")  // Add this line
 public class FinanceController {
 
     @Autowired
-    private FinanceRepository financeRepository;
+    private FinanceService financeService;
 
-    @GetMapping("/Finances")
-    public List<Finance> getFinances() {
-        System.out.println("Fetching Finances...");
-        return financeRepository.findAll();
+    // GET account balance
+    @GetMapping("/accountBalance")
+    public Long getAccountBalance() {
+        return financeService.getAccountBalance();
+    }
+
+    // POST - Add money to the account
+    @PostMapping("/addMoney")
+    public Finance addMoney(@RequestBody AmountDTO amountDTO) {
+        return financeService.addMoney(amountDTO.getAmount()); // Use the amount from the DTO
+    }
+
+    // POST - Subtract money from the account
+    @PostMapping("/subMoney")
+    public Finance subtractMoney(@RequestBody AmountDTO amountDTO) {
+        return financeService.subtractMoney(amountDTO.getAmount()); // Use the amount from the DTO
     }
 }

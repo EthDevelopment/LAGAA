@@ -1,16 +1,15 @@
-USE wealth;
+-- Create the 'finance' table if it doesn't exist
+CREATE TABLE IF NOT EXISTS finance (
+  id BIGINT NOT NULL AUTO_INCREMENT,
+  transaction_id BIGINT NOT NULL,
+  time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  total_balance BIGINT NOT NULL DEFAULT 0,
+  change_amount BIGINT,
+  change_type VARCHAR(10),
+  PRIMARY KEY (id)
+);
 
-CREATE TABLE IF NOT EXISTS `finance` (
-  `depositid` bigint NOT NULL AUTO_INCREMENT,
-  `time` DATETIME DEFAULT CURRENT_TIMESTAMP,
-  `total_balance` BIGINT NOT NULL,
-  `add_amount` BIGINT NOT NULL,
-  `subtract_amount` BIGINT NOT NULL,
-  PRIMARY KEY (`depositid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- Insert initial data
-INSERT INTO finance (total_balance, add_amount, subtract_amount) VALUES
-(1000, 500, 100),
-(1400, 600, 200),
-(1800, 300, 100);
+-- Seed initial account with 0 balance (optional)
+INSERT INTO finance (transaction_id, total_balance, change_amount, change_type, time)
+VALUES
+  (1, 0, 0, 'INITIAL', CURRENT_TIMESTAMP);
