@@ -3,7 +3,8 @@ import React from "react";
 import "./OverviewPage.css";
 import { useNavigate } from "react-router-dom";
 
-const OverviewPage = () => {
+const OverviewPage = ({ netWorth }) => {
+  // Accept netWorth as a prop
   const navigate = useNavigate(); // Define navigate using the useNavigate hook
 
   return (
@@ -20,6 +21,7 @@ const OverviewPage = () => {
         >
           <h2>Finance</h2>
           <p>Track your financial growth.</p>
+          <p>${netWorth.toFixed(2)}</p> {/* Use netWorth here */}
         </div>
 
         <div

@@ -1,18 +1,35 @@
 // src/components/AddFinanceModal.js
 import React, { useState } from "react";
+import axios from "axios"; // Import axios for making HTTP requests
 import "./AddFinanceModal.css";
 
-const AddFinanceModal = ({ isOpen, onClose, onSubmit, type }) => {
+const AddFinanceModal = ({ isOpen, onClose, onSubmit, type, userId }) => {
   const [amount, setAmount] = useState(0);
-  const [operation, setOperation] = useState("add");
 
   if (!isOpen) return null;
 
-  const handleSubmit = () => {
-    const value =
-      operation === "subtract" ? -Math.abs(amount) : Math.abs(amount);
-    onSubmit(type, value); // Pass the type and value to the parent
-    onClose(); // Close the modal after submission
+  const handleSubmit = async () => {
+    try {
+      const value = Math.abs(amount); // Only take the positive amount for addition
+
+      // Make the PATCH request to update the cash balance
+      const response = await axios.patch(
+        `http://localhost/finance/${userId}/cash`,
+        { amount: value }, // Send the amount in the request body as JSON
+        {
+          headers: {
+            "Content-Type": "application/json", // Explicitly set the Content-Type
+          },
+        }
+      );
+
+      // Assuming the response contains the updated finance data
+      onSubmit(type, response.data); // Pass the updated data to the parent
+      onClose(); // Close the modal after submission
+    } catch (error) {
+      console.error("Error updating cash balance", error);
+      // Handle error appropriately (e.g., show a notification)
+    }
   };
 
   return (
@@ -33,19 +50,10 @@ const AddFinanceModal = ({ isOpen, onClose, onSubmit, type }) => {
             <input
               type="radio"
               value="add"
-              checked={operation === "add"}
-              onChange={() => setOperation("add")}
+              checked={true}
+              onChange={() => {}}
             />
             Add
-          </label>
-          <label>
-            <input
-              type="radio"
-              value="subtract"
-              checked={operation === "subtract"}
-              onChange={() => setOperation("subtract")}
-            />
-            Subtract
           </label>
         </div>
 

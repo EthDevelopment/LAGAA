@@ -5,7 +5,13 @@ meta {
 }
 
 put {
-  url: http://localhost/finance/1
-  body: none
+  url: http://localhost/finance/1/cash
+  body: json
   auth: none
+}
+
+body:json {
+  {
+      "amount": 250.00
+  }
 }

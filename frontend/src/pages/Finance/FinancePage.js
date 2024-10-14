@@ -1,15 +1,18 @@
+// src/pages/Finance/FinancePage.js
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import ranks from "./FinanceRanks.json"; // Import ranks.json
 import "./FinancePage.css";
+import AddFinanceModal from "./components/AddFinanceModal";
 
 const FinancePage = ({ setNetWorth }) => {
   const [financeData, setFinanceData] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false); // State to manage modal visibility
   const userId = 1; // Replace with dynamic user ID as needed
 
   useEffect(() => {
     axios
-      .get(`http://localhost:8081/finance/${userId}`)
+      .get(`http://localhost/finance/${userId}`)
       .then((response) => {
         setFinanceData(response.data);
         const netWorth = calculateNetWorth(response.data);
@@ -20,15 +23,38 @@ const FinancePage = ({ setNetWorth }) => {
       });
   }, [userId, setNetWorth]);
 
-  // Calculate net worth as the sum of all financial data points
+  // Calculate net worth as the sum of all financial data points, with NaN checks
   const calculateNetWorth = (data) => {
-    return (
-      (data?.cashBalance ?? 0) +
-      (data?.assetsValue ?? 0) +
-      (data?.stockValue ?? 0) +
-      (data?.cryptoHoldings ?? 0)
+    const cash = Number(data?.cashBalance ?? 0);
+    const assets = Number(data?.assetsValue ?? 0);
+    const stock = Number(data?.stockValue ?? 0);
+    const crypto = Number(data?.cryptoHoldings ?? 0);
+
+    const netWorth = cash + assets + stock + crypto;
+
+    // Log the values for better debugging
+    console.log(
+      "Cash:",
+      cash,
+      "Assets:",
+      assets,
+      "Stock:",
+      stock,
+      "Crypto:",
+      crypto
     );
+    console.log("Calculated Net Worth:", netWorth);
+
+    // If net worth is NaN, return 0
+    return isNaN(netWorth) ? 0 : netWorth;
   };
+
+  // Usage in JSX
+  const netWorth = calculateNetWorth(financeData);
+  console.log("Net Worth:", netWorth); // Debugging: log the net worth value
+
+  // Ensure netWorth is a number and fallback to 0 if it's NaN
+  const formattedNetWorth = isNaN(netWorth) ? 0 : netWorth;
 
   // Get rank and progress to next rank based on value and ranks array
   const getRankInfo = (value, category) => {
@@ -42,6 +68,51 @@ const FinancePage = ({ setNetWorth }) => {
       }
     }
     return { currentRank: "Unranked", nextRank: null, progress: 0 };
+  };
+
+  // Handle submission from the modal
+  const handleModalSubmit = async (type, value) => {
+    const updatedFinanceData = { ...financeData };
+
+    const parsedValue = Number(value);
+    if (isNaN(parsedValue)) {
+      console.error("Invalid input value:", value);
+      return; // Prevent updating if the value is not a valid number
+    }
+
+    // Update the appropriate value based on type
+    if (type === "cashBalance") {
+      updatedFinanceData.cashBalance =
+        Number(updatedFinanceData.cashBalance) + parsedValue;
+    } else if (type === "assetsValue") {
+      updatedFinanceData.assetsValue =
+        Number(updatedFinanceData.assetsValue) + parsedValue;
+    } else if (type === "stockValue") {
+      updatedFinanceData.stockValue =
+        Number(updatedFinanceData.stockValue) + parsedValue;
+    } else if (type === "cryptoHoldings") {
+      updatedFinanceData.cryptoHoldings =
+        Number(updatedFinanceData.cryptoHoldings) + parsedValue;
+    }
+
+    // Log the updated finance data
+    console.log("Updated finance data:", updatedFinanceData);
+    setFinanceData(updatedFinanceData);
+
+    // Recalculate and update net worth
+    const newNetWorth = calculateNetWorth(updatedFinanceData);
+    console.log("New Net Worth after update:", newNetWorth);
+    setNetWorth(isNaN(newNetWorth) ? 0 : newNetWorth);
+
+    // After submitting, re-fetch the data to ensure consistency with the backend
+    try {
+      const response = await axios.get(`http://localhost/finance/${userId}`);
+      setFinanceData(response.data); // Set the fetched data
+      const recalculatedNetWorth = calculateNetWorth(response.data);
+      setNetWorth(recalculatedNetWorth);
+    } catch (error) {
+      console.error("Error refetching finance data:", error);
+    }
   };
 
   if (!financeData) {
@@ -58,42 +129,27 @@ const FinancePage = ({ setNetWorth }) => {
         {/* Net Worth Card */}
         <div className="finance-card net-worth-card">
           <div className="rank-badge">
-            Rank:{" "}
-            {
-              getRankInfo(calculateNetWorth(financeData), "netWorth")
-                .currentRank
-            }
+            Rank: {getRankInfo(formattedNetWorth, "netWorth").currentRank}
           </div>
           <h2>Net Worth</h2>
-          <p>${calculateNetWorth(financeData).toFixed(2)}</p>
+          <p>${formattedNetWorth.toFixed(2)}</p> {/* Safely applying toFixed */}
           <span>
-            Rank:{" "}
-            {
-              getRankInfo(calculateNetWorth(financeData), "netWorth")
-                .currentRank
-            }
+            Rank: {getRankInfo(formattedNetWorth, "netWorth").currentRank}
           </span>
           <div className="progress-bar">
             <div
               className="progress"
               style={{
                 width: `${
-                  getRankInfo(calculateNetWorth(financeData), "netWorth")
-                    .progress
+                  getRankInfo(formattedNetWorth, "netWorth").progress
                 }%`,
               }}
             ></div>
           </div>
           <span>
             Next Rank:{" "}
-            {getRankInfo(calculateNetWorth(financeData), "netWorth").nextRank
-              ?.rank || "Max"}
+            {getRankInfo(formattedNetWorth, "netWorth").nextRank?.rank || "Max"}
           </span>
-          {/* Footer with two buttons */}
-          <div className="finance-footer">
-            <button className="finance-button">+</button>
-            <button className="finance-button">-</button>
-          </div>
         </div>
 
         {/* Cash Balance */}
@@ -132,7 +188,12 @@ const FinancePage = ({ setNetWorth }) => {
           </span>
           {/* Footer with two buttons */}
           <div className="finance-footer">
-            <button className="finance-button">+</button>
+            <button
+              className="finance-button"
+              onClick={() => setIsModalOpen(true)}
+            >
+              +
+            </button>
             <button className="finance-button">-</button>
           </div>
         </div>
@@ -239,6 +300,14 @@ const FinancePage = ({ setNetWorth }) => {
           </span>
         </div>
       </section>
+
+      <AddFinanceModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onSubmit={handleModalSubmit}
+        type="cashBalance"
+        userId={1}
+      />
     </div>
   );
 };

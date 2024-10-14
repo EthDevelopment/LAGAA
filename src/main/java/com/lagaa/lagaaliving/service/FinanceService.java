@@ -1,67 +1,49 @@
 package com.lagaa.lagaaliving.service;
 
-import com.lagaa.lagaaliving.model.Finance;
-import com.lagaa.lagaaliving.repository.FinanceRepository;
+import java.math.BigDecimal;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
+import com.lagaa.lagaaliving.model.Finance;
+import com.lagaa.lagaaliving.repository.FinanceRepository;
 
 @Service
 public class FinanceService {
 
-    private final FinanceRepository financeRepository;
+    @Autowired
+    private FinanceRepository financeRepository;
 
-    public FinanceService(FinanceRepository financeRepository) {
-        this.financeRepository = financeRepository;
-    }
-
-    // Get finance data by userId
+    // Method to retrieve finance data by userId
     public Finance getFinanceByUserId(Long userId) {
         return financeRepository.findByUserId(userId);
     }
 
-    // Update the cash balance (add/subtract)
-    public Finance updateCashBalance(Long userId, double amount) {
+    // Update cash balance method
+    public Finance updateCashBalance(Long userId, Double amount) {
         Finance finance = financeRepository.findByUserId(userId);
-        if (finance != null) {
-            // Convert the double amount to BigDecimal
-            BigDecimal amountToAdd = BigDecimal.valueOf(amount);
-            finance.setCashBalance(finance.getCashBalance().add(amountToAdd)); // Use add() method for BigDecimal
-            financeRepository.save(finance);
-        }
-        return finance;
+        finance.setCashBalance(finance.getCashBalance().add(BigDecimal.valueOf(amount))); // Update cash balance
+        return financeRepository.save(finance);
     }
 
-    // Update the assets balance (add/subtract)
-    public Finance updateAssetsBalance(Long userId, double amount) {
+    // Method to update assets value
+    public Finance updateAssetsValue(Long userId, Double amount) {
         Finance finance = financeRepository.findByUserId(userId);
-        if (finance != null) {
-            BigDecimal amountToAdd = BigDecimal.valueOf(amount);
-            finance.setAssetsValue(finance.getAssetsValue().add(amountToAdd)); // Use add() method for BigDecimal
-            financeRepository.save(finance);
-        }
-        return finance;
+        finance.setAssetsValue(finance.getAssetsValue().add(BigDecimal.valueOf(amount))); // Update assets value
+        return financeRepository.save(finance);
     }
 
-    // Update the stock balance (add/subtract)
-    public Finance updateStockBalance(Long userId, double amount) {
+    // Method to update stock value
+    public Finance updateStockValue(Long userId, Double amount) {
         Finance finance = financeRepository.findByUserId(userId);
-        if (finance != null) {
-            BigDecimal amountToAdd = BigDecimal.valueOf(amount);
-            finance.setStockValue(finance.getStockValue().add(amountToAdd)); // Use add() method for BigDecimal
-            financeRepository.save(finance);
-        }
-        return finance;
+        finance.setStockValue(finance.getStockValue().add(BigDecimal.valueOf(amount))); // Update stock value
+        return financeRepository.save(finance);
     }
 
-    // Update the crypto balance (add/subtract)
-    public Finance updateCryptoBalance(Long userId, double amount) {
+    // Method to update crypto holdings
+    public Finance updateCryptoHoldings(Long userId, Double amount) {
         Finance finance = financeRepository.findByUserId(userId);
-        if (finance != null) {
-            BigDecimal amountToAdd = BigDecimal.valueOf(amount);
-            finance.setCryptoHoldings(finance.getCryptoHoldings().add(amountToAdd)); // Use add() method for BigDecimal
-            financeRepository.save(finance);
-        }
-        return finance;
+        finance.setCryptoHoldings(finance.getCryptoHoldings().add(BigDecimal.valueOf(amount))); // Update crypto holdings
+        return financeRepository.save(finance);
     }
 }

@@ -1,7 +1,8 @@
 package com.lagaa.lagaaliving.repository;
 
-import com.lagaa.lagaaliving.model.Finance;
 import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.lagaa.lagaaliving.model.Finance;
 
 public interface FinanceRepository extends JpaRepository<Finance, Long> {
 
