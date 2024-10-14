@@ -1,0 +1,117 @@
+/* src/pages/Finance/FinancePage.css */
+
+.finance-page {
+  padding: 50px;
+  background-color: #121212;
+  color: #ffffff;
+  font-family: "Poppins", sans-serif;
+  min-height: 100vh;
+}
+
+.finance-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.finance-header h1 {
+  font-size: 3.5rem;
+  color: #fbbf24; /* Golden yellow to represent achievement */
+  font-weight: 700;
+}
+
+.finance-header p {
+  font-size: 1.5rem;
+  color: #b0b0b0;
+}
+
+.finance-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+  padding: 20px;
+}
+
+.finance-card {
+  background-color: #1f1f1f;
+  padding: 30px;
+  border-radius: 15px;
+  text-align: center;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+  position: relative;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.finance-card:hover {
+  transform: translateY(-10px); /* Hover effect */
+  box-shadow: 0 20px 30px rgba(0, 0, 0, 0.7);
+}
+
+.rank-badge {
+  position: absolute;
+  top: -15px;
+  left: 15px;
+  background-color: #00d084; /* Achievement badge color */
+  color: #ffffff;
+  padding: 10px 20px;
+  border-radius: 50px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+}
+
+.finance-card h2 {
+  font-size: 1.8rem;
+  margin-bottom: 10px;
+  color: #fbbf24; /* Highlight financial data */
+}
+
+.finance-card p {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+span {
+  color: #b0b0b0;
+  font-size: 1.1rem;
+  margin-top: 10px;
+}
+
+.progress-bar {
+  width: 100%;
+  background-color: #333;
+  border-radius: 10px;
+  height: 15px;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.progress {
+  background-color: #fbbf24; /* Golden progress bar */
+  height: 100%;
+  border-radius: 10px;
+  transition: width 0.4s ease;
+}
+
+.finance-footer {
+  display: flex;
+  justify-content: center; /* Center the footer content */
+  width: 100%;
+  margin-top: 20px; /* Space between content and footer */
+}
+
+.finance-button {
+  width: calc(50% - 10px); /* Subtract margin from the width */
+  padding: 10px;
+  font-size: 1.2rem;
+  background-color: #00d084;
+  color: white;
+  border: none;
+  cursor: pointer;
+  text-align: center; /* Center text inside the button */
+  margin: 0 5px; /* Add horizontal margin between buttons */
+}
+
+.finance-button:hover {
+  background-color: #00b070;
+}

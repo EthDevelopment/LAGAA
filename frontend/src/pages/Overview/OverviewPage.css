@@ -1,0 +1,171 @@
+/* src/pages/Overview/OverviewPage.css */
+
+/* General styles remain the same */
+body,
+html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: "Inter", sans-serif;
+  background-color: #1e1e2e; /* Dark background for immersive theme */
+}
+
+.overview-page {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  justify-content: space-between;
+  text-align: center;
+  color: #f5f5f5; /* Light text to contrast with dark background */
+}
+
+.overview-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background-color: transparent;
+}
+
+.overview-header h1 {
+  margin: 0;
+  font-size: 2.5rem;
+  color: #ffcc00; /* Golden yellow for a more prestigious, gamified feel */
+}
+
+.overall-level {
+  font-size: 1.25rem;
+  color: #34d399; /* Greenish tone to indicate progression/level */
+}
+
+.overview-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  padding: 20px;
+  height: calc(100vh - 80px);
+}
+
+/* Overview card with 3D and immersive effect */
+.overview-card {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  border-radius: 15px;
+  color: #f5f5f5;
+  font-size: 1.5rem;
+  font-weight: bold;
+  padding: 20px;
+  background-size: cover;
+  background-position: center;
+  perspective: 1000px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+}
+
+.overview-card:hover {
+  transform: translateY(-10px); /* Card floats slightly when hovered */
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+}
+
+.overview-card::after {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    45deg,
+    rgba(255, 255, 255, 0.2),
+    rgba(255, 255, 255, 0.1),
+    rgba(255, 255, 255, 0)
+  );
+  opacity: 0;
+  transform: rotateZ(45deg);
+  transition: opacity 0.3s ease-in-out, transform 1s ease-in-out;
+  pointer-events: none;
+  border-radius: 15px;
+}
+
+.overview-card:hover::after {
+  opacity: 1;
+  transform: rotateZ(45deg) translateX(200%) translateY(200%);
+}
+
+/* Different images for each card */
+.finance {
+  background-image: url("../../assets/overview/cards/finance-alt.jpeg");
+  background-blend-mode: overlay;
+}
+.health {
+  background-image: url("../../assets/overview/cards/health-alt.jpeg");
+  background-blend-mode: overlay;
+}
+.mental {
+  background-image: url("../../assets/overview/cards/mental-alt.jpeg");
+  background-blend-mode: overlay;
+}
+.skills {
+  background-image: url("../../assets/overview/cards/skills-alt.jpeg");
+  background-blend-mode: overlay;
+}
+
+/* Color overlay for each card */
+.finance::before,
+.health::before,
+.mental::before,
+.skills::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* Dark overlay to emphasize text */
+  border-radius: 15px;
+  z-index: 1;
+}
+
+/* Adding subtle glow for immersive effect */
+.finance:hover::before {
+  background: rgba(34, 197, 94, 0.5); /* Subtle green glow for finance */
+}
+
+.health:hover::before {
+  background: rgba(252, 58, 70, 0.5); /* Subtle red glow for health */
+}
+
+.mental:hover::before {
+  background: rgba(45, 151, 251, 0.5); /* Subtle blue glow for mental */
+}
+
+.skills:hover::before {
+  background: rgba(239, 140, 0, 0.5); /* Subtle orange glow for skills */
+}
+
+.overview-card h2,
+.overview-card p {
+  position: relative;
+  z-index: 2;
+}
+
+.overview-card h2 {
+  margin: 0;
+  font-size: 1.75rem;
+}
+
+.overview-card p {
+  font-size: 1rem;
+  color: #d1d5db; /* Light text for description */
+}
+
+/* Responsive for smaller screens */
+@media (max-width: 768px) {
+  .overview-grid {
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(4, 1fr);
+  }
+}

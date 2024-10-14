@@ -2,47 +2,66 @@ package com.lagaa.lagaaliving.service;
 
 import com.lagaa.lagaaliving.model.Finance;
 import com.lagaa.lagaaliving.repository.FinanceRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.sql.Timestamp;
+import java.math.BigDecimal;
 
 @Service
 public class FinanceService {
 
-    @Autowired
-    private FinanceRepository financeRepository;
+    private final FinanceRepository financeRepository;
 
-    // Get the current account balance
-    public Long getAccountBalance() {
-        // Get the most recent transaction to retrieve the current balance
-        return financeRepository.findAll().stream()
-                .map(Finance::getTotalBalance)
-                .reduce((first, second) -> second) // Get the last transaction's balance
-                .orElse(0L);  // Default to 0 if no transactions exist
+    public FinanceService(FinanceRepository financeRepository) {
+        this.financeRepository = financeRepository;
     }
 
-    // Add money to the account
-    public Finance addMoney(Long amount) {
-        Long currentBalance = getAccountBalance();
-        Finance finance = new Finance();
-        finance.setTransactionId(System.currentTimeMillis());  // For simplicity, use the current timestamp as the transaction ID
-        finance.setChangeAmount(amount);
-        finance.setChangeType("ADD");
-        finance.setTotalBalance(currentBalance + amount);
-        finance.setTime(new Timestamp(System.currentTimeMillis()));
-        return financeRepository.save(finance);
+    // Get finance data by userId
+    public Finance getFinanceByUserId(Long userId) {
+        return financeRepository.findByUserId(userId);
     }
 
-    // Subtract money from the account
-    public Finance subtractMoney(Long amount) {
-        Long currentBalance = getAccountBalance();
-        Finance finance = new Finance();
-        finance.setTransactionId(System.currentTimeMillis());  // For simplicity, use the current timestamp as the transaction ID
-        finance.setChangeAmount(amount);
-        finance.setChangeType("SUBTRACT");
-        finance.setTotalBalance(currentBalance - amount);
-        finance.setTime(new Timestamp(System.currentTimeMillis()));
-        return financeRepository.save(finance);
+    // Update the cash balance (add/subtract)
+    public Finance updateCashBalance(Long userId, double amount) {
+        Finance finance = financeRepository.findByUserId(userId);
+        if (finance != null) {
+            // Convert the double amount to BigDecimal
+            BigDecimal amountToAdd = BigDecimal.valueOf(amount);
+            finance.setCashBalance(finance.getCashBalance().add(amountToAdd)); // Use add() method for BigDecimal
+            financeRepository.save(finance);
+        }
+        return finance;
+    }
+
+    // Update the assets balance (add/subtract)
+    public Finance updateAssetsBalance(Long userId, double amount) {
+        Finance finance = financeRepository.findByUserId(userId);
+        if (finance != null) {
+            BigDecimal amountToAdd = BigDecimal.valueOf(amount);
+            finance.setAssetsValue(finance.getAssetsValue().add(amountToAdd)); // Use add() method for BigDecimal
+            financeRepository.save(finance);
+        }
+        return finance;
+    }
+
+    // Update the stock balance (add/subtract)
+    public Finance updateStockBalance(Long userId, double amount) {
+        Finance finance = financeRepository.findByUserId(userId);
+        if (finance != null) {
+            BigDecimal amountToAdd = BigDecimal.valueOf(amount);
+            finance.setStockValue(finance.getStockValue().add(amountToAdd)); // Use add() method for BigDecimal
+            financeRepository.save(finance);
+        }
+        return finance;
+    }
+
+    // Update the crypto balance (add/subtract)
+    public Finance updateCryptoBalance(Long userId, double amount) {
+        Finance finance = financeRepository.findByUserId(userId);
+        if (finance != null) {
+            BigDecimal amountToAdd = BigDecimal.valueOf(amount);
+            finance.setCryptoHoldings(finance.getCryptoHoldings().add(amountToAdd)); // Use add() method for BigDecimal
+            financeRepository.save(finance);
+        }
+        return finance;
     }
 }

@@ -1,0 +1,50 @@
+/* App.css */
+.App {
+  text-align: center;
+  overflow-x: hidden; /* Prevent horizontal scroll */
+  width: 100vw; /* Set fixed width to 100% of the viewport */
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+  overflow-x: hidden; /* Prevents horizontal overflow in header */
+  width: 100vw; /* Make sure header does not exceed viewport width */
+  margin: 0; /* Remove any possible margin that can cause overflow */
+}
+
+html,
+body {
+  width: 100vw; 
+  overflow-x: hidden;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
