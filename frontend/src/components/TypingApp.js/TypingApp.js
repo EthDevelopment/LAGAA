@@ -78,16 +78,25 @@ const TypingApp = ({ bookContent, onClose }) => {
             {pages[currentPage]?.split("").map((char, idx) => {
               const isCorrect =
                 idx < typedText.length && typedText[idx] === char;
-              const displayChar = char === "\n" ? "↵" : char; // Use a symbol for newlines
+              const displayChar = char === "\n" ? "↵" : char;
+
               return (
-                <span
-                  key={idx}
-                  className={isCorrect ? "correct-char" : "incorrect-char"}
-                >
-                  {displayChar}
-                </span>
+                <React.Fragment key={idx}>
+                  {/* Show the cursor if this is the next character to type */}
+                  {idx === typedText.length && (
+                    <span className="typing-cursor"></span>
+                  )}
+                  <span
+                    className={isCorrect ? "correct-char" : "incorrect-char"}
+                  >
+                    {displayChar}
+                  </span>
+                </React.Fragment>
               );
             })}
+
+            {/* If the sentence hasn't started, show the cursor at the very beginning */}
+            {typedText.length === 0 && <span className="typing-cursor"></span>}
           </div>
         </div>
 
@@ -99,4 +108,3 @@ const TypingApp = ({ bookContent, onClose }) => {
 };
 
 export default TypingApp;
-

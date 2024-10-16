@@ -50,15 +50,17 @@
 }
 
 .book-page-content {
-  font-family: "Courier New", Courier, monospace; /* Typewriter-like font */
+  font-family: "Monaco", Courier, monospace; /* Typewriter-like font */
   font-size: 5rem; /* Larger font size */
-  line-height: 5rem; /* Reduced line spacing */
+  line-height: 4rem; /* Reduced line spacing */
   word-wrap: break-word;
   white-space: pre-wrap;
   color: #e0e0e0;
   max-width: 80%; /* Limit text width */
   text-align: center; /* Centered text */
   margin: 0 auto;
+
+  font-weight: bold;
 }
 
 .correct-char {
@@ -96,4 +98,25 @@
 .close-button:hover {
   color: #ff5f56;
   background-color: transparent;
+}
+
+/* Add this to the bottom of your TypingApp.css */
+.typing-cursor {
+  border-left: 2px solid #ffcc00; /* Yellow cursor as per your image */
+  display: inline-block;
+  margin-left: -2px; /* Adjust to position it properly */
+  height: 1.5em; /* Adjust based on the font-size */
+  animation: blink 0.7s infinite; /* Blinking animation */
+}
+
+@keyframes blink {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
