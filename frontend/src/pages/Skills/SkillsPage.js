@@ -1,17 +1,28 @@
 import React, { useState } from "react";
 import "./SkillsPage.css";
-import TypingApp from "../../components/TypingApp.js/TypingApp";
-import sampleBook from "./books/Books.json"; // Sample book content
+import books from "./books/Books.json"; // Sample book content
+import TypingApp from "../../components/TypingApp/TypingApp";
+import BookSelector from "../../components/BookSelector/BookSelector"; // Importing BookSelector component
 
 const SkillsPage = () => {
-  const [isTyping, setIsTyping] = useState(false); // State to open/close modal
+  const [isTyping, setIsTyping] = useState(false); // State to open/close TypingApp modal
+  const [isSelectingBook, setIsSelectingBook] = useState(true); // State to open/close BookSelector modal
+  const [selectedBook, setSelectedBook] = useState(null); // Store the selected book
 
   const handleOpenModal = () => {
-    setIsTyping(true); // Open the modal
+    setIsSelectingBook(true); // Open BookSelector modal
   };
 
   const handleCloseModal = () => {
-    setIsTyping(false); // Close the modal
+    setIsTyping(false); // Close TypingApp modal
+    setSelectedBook(null); // Reset book selection
+  };
+
+  // Function to handle the book selection from the BookSelector modal
+  const handleSelectBook = (book) => {
+    setSelectedBook(book); // Set the selected book
+    setIsSelectingBook(false); // Close book selector
+    setIsTyping(true); // Open TypingApp modal
   };
 
   return (
@@ -63,9 +74,21 @@ const SkillsPage = () => {
         </div>
       </section>
 
-      {/* Conditionally render TypingApp when isTyping is true */}
-      {isTyping && (
-        <TypingApp bookContent={sampleBook} onClose={handleCloseModal} />
+      {/* Book Selector Modal */}
+      {isSelectingBook && (
+        <BookSelector
+          books={books} // Pass the list of books from JSON
+          onSelectBook={handleSelectBook} // Handle book selection
+          onClose={() => setIsSelectingBook(false)} // Close book selector
+        />
+      )}
+
+      {/* TypingApp Modal */}
+      {isTyping && selectedBook && (
+        <TypingApp
+          bookContent={selectedBook} // Pass selected book content to TypingApp
+          onClose={handleCloseModal} // Handle closing TypingApp
+        />
       )}
     </div>
   );

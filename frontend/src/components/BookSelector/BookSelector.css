@@ -1,0 +1,129 @@
+/* BookSelector.css */
+
+.book-selector-modal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 90vw;
+  height: 90vh;
+  background-color: #2d2d2d;
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+}
+
+.book-selector-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 60px;
+  background-color: #1c1c1c;
+  color: #fff;
+  padding: 0 20px;
+  border-bottom: 2px solid #444;
+}
+
+.book-selector-header .title {
+  margin: 0;
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #f0f0f0;
+}
+
+.book-selector-close-button {
+  background: transparent;
+  border: none;
+  color: #ff5f56;
+  font-size: 1.8rem;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.book-selector-close-button:hover {
+  color: #ff8787;
+}
+
+.book-selector-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  padding: 20px;
+  background-color: #2d2d2d;
+  font-family: "Helvetica Neue", Arial, sans-serif;
+  color: #e0e0e0;
+}
+
+.category-dropdown {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.category-dropdown label {
+  color: #fff;
+  font-size: 1.2rem;
+  margin-right: 10px;
+}
+
+.category-dropdown select {
+  background-color: #3b3b3b;
+  color: #fff;
+  border: 1px solid #444;
+  padding: 10px 15px;
+  font-size: 1.2rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, border 0.3s ease;
+}
+
+.category-dropdown select:hover {
+  background-color: #444;
+  border: 1px solid #ff5f56;
+}
+
+.book-selection-list {
+  font-size: 1.5rem;
+  color: #e0e0e0;
+  text-align: center;
+  max-width: 80%;
+}
+
+.book-selection-list ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.book-selection-list li {
+  margin: 15px 0;
+}
+
+.book-button {
+  background-color: #292929;
+  color: #fff;
+  border: none;
+  padding: 10px 25px;
+  cursor: pointer;
+  font-size: 1.3rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.book-button:hover {
+  background-color: #ff5f56;
+  transform: translateY(-5px);
+}
+
+.book-button:active {
+  transform: translateY(0);
+}

@@ -7,6 +7,7 @@ const TypingApp = ({ bookContent, onClose }) => {
   const [isPageTurning, setIsPageTurning] = useState(false); // Track page turn animation state
   const [wpm, setWpm] = useState(0); // Track words per minute
   const startTimeRef = useRef(null); // Store start time of typing
+  const [isTimerRunning, setIsTimerRunning] = useState(false); // Track whether the timer is running
 
   // Split book content into sentences (ending with ".")
   const pages = bookContent.Content.split(/(?<=\.)\s+/); // Split by sentence
@@ -25,9 +26,11 @@ const TypingApp = ({ bookContent, onClose }) => {
 
   // Calculate WPM based on the number of words typed and time spent typing
   const calculateWpm = () => {
-    const timeElapsed = (Date.now() - startTimeRef.current) / 1000 / 60; // time in minutes
-    const wordsTyped = typedText.trim().split(/\s+/).length; // count words typed
-    setWpm(Math.floor(wordsTyped / timeElapsed));
+    if (startTimeRef.current && isTimerRunning) {
+      const timeElapsed = (Date.now() - startTimeRef.current) / 1000 / 60; // time in minutes
+      const wordsTyped = typedText.trim().split(/\s+/).length; // count words typed
+      setWpm(Math.floor(wordsTyped / timeElapsed));
+    }
   };
 
   const handleKeyPress = (e) => {
@@ -35,8 +38,9 @@ const TypingApp = ({ bookContent, onClose }) => {
     const currentChunk = pages[currentPage] || "";
     const nextChar = normalizeHyphen(currentChunk[typedText.length]);
 
-    if (!startTimeRef.current) {
+    if (!startTimeRef.current || !isTimerRunning) {
       startTimeRef.current = Date.now(); // Start timer on first key press
+      setIsTimerRunning(true); // Resume timer when typing starts on a new page
     }
 
     if (
@@ -55,14 +59,15 @@ const TypingApp = ({ bookContent, onClose }) => {
     }
   };
 
-  // Function to reveal the next sentence (next page)
+  // Function to reveal the next sentence (next page) and stop the timer
   const handleNextChunk = () => {
     setIsPageTurning(true); // Start transition
     setTimeout(() => {
-      // After transition, update the content
       setTypedText(""); // Reset typed text
       setCurrentPage((prev) => prev + 1); // Move to the next chunk (sentence)
       setIsPageTurning(false); // End the transition
+      startTimeRef.current = null; // Reset timer when page is complete
+      setIsTimerRunning(false); // Stop timer until next page starts typing
     }, 1000); // Set transition duration
   };
 
@@ -80,7 +85,7 @@ const TypingApp = ({ bookContent, onClose }) => {
       <div className="modal-overlay" onClick={handleCloseModal}></div>
 
       <div className={`typing-modal ${isPageTurning ? "turning" : ""}`}>
-        {/* Outer bezel with the centered title and close button */}
+        {/* Outer bezel with the centered title, WPM counter, and close button */}
         <div className="typing-header">
           <div className="wpm-counter">WPM: {wpm}</div> {/* Add WPM counter */}
           <h2 className="title">{bookContent.Title}</h2>
@@ -88,6 +93,7 @@ const TypingApp = ({ bookContent, onClose }) => {
             &#10005;
           </button>
         </div>
+
         {/* Single page layout */}
         <div className="typing-single-page">
           <div className="book-page-content">
@@ -110,11 +116,9 @@ const TypingApp = ({ bookContent, onClose }) => {
                 </React.Fragment>
               );
             })}
-
-            {/* If the sentence hasn't started, show the cursor at the very beginning */}
-            {typedText.length === 0 && <span className="typing-cursor"></span>}
           </div>
         </div>
+
         {/* Page number display */}
         <div className="page-numbers">Page {currentPage + 1}</div>
       </div>

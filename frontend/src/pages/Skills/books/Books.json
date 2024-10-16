@@ -1,4 +1,22 @@
-{
-  "Title": "The Power of Persistence",
-  "Content": "Dreams are the fuel that keeps us moving forward, even when the road gets tough. The journey toward achieving them is often filled with obstacles, doubts, and challenges. But these difficulties are not meant to stop us—they are designed to strengthen us. When we refuse to give up, we not only build resilience but also develop the character and skills necessary to reach our goals. Persistence, more than talent or luck, is the key ingredient to success. Every failure is an opportunity to learn and grow, bringing us one step closer to turning our dreams into reality. \n\nGiving up may seem like the easier choice when faced with setbacks, but it's important to remember that the path to success is rarely a straight line. Often, the greatest breakthroughs come just after moments of deep frustration and despair. It’s in those moments that the decision to persist matters most. Successful people are not those who never fail, but those who never quit. They keep pushing, learning, and adapting, knowing that each setback is temporary and a vital part of the growth process. \n\nMoreover, pursuing your dreams gives life meaning and direction. When we commit to a dream, we take ownership of our lives. It empowers us, fills us with purpose, and gives us something to strive for each day. Without dreams, we risk becoming passive, letting life happen to us rather than actively shaping our own destiny. Staying committed to your dreams, even when the odds seem against you, allows you to live fully and authentically. No matter how hard things get, remember that perseverance is what transforms dreams into reality."
-}
+[
+  {
+    "Title": "The Power of Persistence",
+    "Category": "Philosophy",
+    "Content": "Dreams are the fuel that keeps us moving forward, even when the road gets tough. The journey toward achieving them is often filled with obstacles, doubts, and challenges. But these difficulties are not meant to stop us—they are designed to strengthen us. When we refuse to give up, we not only build resilience but also develop the character and skills necessary to reach our goals. Persistence, more than talent or luck, is the key ingredient to success. Every failure is an opportunity to learn and grow, bringing us one step closer to turning our dreams into reality. \n\nGiving up may seem like the easier choice when faced with setbacks, but it's important to remember that the path to success is rarely a straight line. Often, the greatest breakthroughs come just after moments of deep frustration and despair. It’s in those moments that the decision to persist matters most. Successful people are not those who never fail, but those who never quit. They keep pushing, learning, and adapting, knowing that each setback is temporary and a vital part of the growth process. \n\nMoreover, pursuing your dreams gives life meaning and direction. When we commit to a dream, we take ownership of our lives. It empowers us, fills us with purpose, and gives us something to strive for each day. Without dreams, we risk becoming passive, letting life happen to us rather than actively shaping our own destiny. Staying committed to your dreams, even when the odds seem against you, allows you to live fully and authentically. No matter how hard things get, remember that perseverance is what transforms dreams into reality."
+  },
+  {
+    "Title": "Healthy Living",
+    "Category": "Health",
+    "Content": "This is the content of the book Healthy Living."
+  },
+  {
+    "Title": "Financial Freedom",
+    "Category": "Finance",
+    "Content": "This is the content of the book Financial Freedom."
+  },
+  {
+    "Title": "Mind Over Matter",
+    "Category": "Mental",
+    "Content": "This is the content of the book Mind Over Matter."
+  }
+]
