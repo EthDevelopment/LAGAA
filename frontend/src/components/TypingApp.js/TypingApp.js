@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./TypingApp.css";
 
 const TypingApp = ({ bookContent, onClose }) => {
   const [typedText, setTypedText] = useState(""); // Track user's input
   const [currentPage, setCurrentPage] = useState(0); // Track the current page set
   const [isPageTurning, setIsPageTurning] = useState(false); // Track page turn animation state
+  const [wpm, setWpm] = useState(0); // Track words per minute
+  const startTimeRef = useRef(null); // Store start time of typing
 
   // Split book content into sentences (ending with ".")
   const pages = bookContent.Content.split(/(?<=\.)\s+/); // Split by sentence
@@ -21,16 +23,30 @@ const TypingApp = ({ bookContent, onClose }) => {
     return char;
   };
 
+  // Calculate WPM based on the number of words typed and time spent typing
+  const calculateWpm = () => {
+    const timeElapsed = (Date.now() - startTimeRef.current) / 1000 / 60; // time in minutes
+    const wordsTyped = typedText.trim().split(/\s+/).length; // count words typed
+    setWpm(Math.floor(wordsTyped / timeElapsed));
+  };
+
   const handleKeyPress = (e) => {
     const inputChar = normalizeHyphen(e.key);
     const currentChunk = pages[currentPage] || "";
     const nextChar = normalizeHyphen(currentChunk[typedText.length]);
+
+    if (!startTimeRef.current) {
+      startTimeRef.current = Date.now(); // Start timer on first key press
+    }
 
     if (
       inputChar === nextChar ||
       (inputChar === "Enter" && nextChar === "\n")
     ) {
       setTypedText((prev) => prev + inputChar); // Add correct character
+
+      // Recalculate WPM after every key press
+      calculateWpm();
 
       // Check if we've reached the end of the current chunk (sentence)
       if (typedText.length + 1 === currentChunk.length) {
@@ -66,12 +82,12 @@ const TypingApp = ({ bookContent, onClose }) => {
       <div className={`typing-modal ${isPageTurning ? "turning" : ""}`}>
         {/* Outer bezel with the centered title and close button */}
         <div className="typing-header">
+          <div className="wpm-counter">WPM: {wpm}</div> {/* Add WPM counter */}
           <h2 className="title">{bookContent.Title}</h2>
           <button className="close-button" onClick={handleCloseModal}>
             &#10005;
           </button>
         </div>
-
         {/* Single page layout */}
         <div className="typing-single-page">
           <div className="book-page-content">
@@ -99,7 +115,6 @@ const TypingApp = ({ bookContent, onClose }) => {
             {typedText.length === 0 && <span className="typing-cursor"></span>}
           </div>
         </div>
-
         {/* Page number display */}
         <div className="page-numbers">Page {currentPage + 1}</div>
       </div>

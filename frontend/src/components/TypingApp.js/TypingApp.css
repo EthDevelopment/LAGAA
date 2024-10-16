@@ -49,6 +49,21 @@
   position: relative;
 }
 
+/* Style the WPM counter */
+.wpm-counter {
+  position: absolute;
+  top: 15px;
+  left: 30px; /* Position it on the left edge */
+  color: #fff; /* White text */
+  font-size: 1.5rem;
+  font-family: "Monaco", Courier, monospace; /* Consistent font */
+  font-weight: bold;
+}
+.wpm-counter:hover {
+  color: #ffcc00;
+  background-color: transparent;
+}
+
 .book-page-content {
   font-family: "Monaco", Courier, monospace; /* Typewriter-like font */
   font-size: 5rem; /* Larger font size */
@@ -84,7 +99,7 @@
 
 .close-button {
   position: absolute;
-  top: 25px;
+  top: 15px;
   right: 30px;
   background: transparent;
   border: none;
