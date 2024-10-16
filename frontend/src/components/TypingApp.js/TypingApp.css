@@ -1,0 +1,99 @@
+.typing-modal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 90vw;
+  height: 90vh;
+  background-color: #1e1e1e;
+  border-radius: 10px;
+  padding: 0;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+  overflow: hidden;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+}
+
+.typing-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 80px;
+  background-color: #292929;
+  color: #fff;
+  padding: 0 20px;
+  border-bottom: 1px solid #444;
+  position: relative;
+}
+
+.typing-header .title {
+  margin: 0;
+  font-size: 2rem;
+  font-weight: 600;
+  color: #e5e5e5;
+}
+
+.typing-single-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: calc(100% - 80px); /* Adjust for header height */
+  background-color: #1e1e1e;
+  color: #ccc;
+  box-sizing: border-box;
+  position: relative;
+}
+
+.book-page-content {
+  font-family: "Courier New", Courier, monospace; /* Typewriter-like font */
+  font-size: 5rem; /* Larger font size */
+  line-height: 5rem; /* Reduced line spacing */
+  word-wrap: break-word;
+  white-space: pre-wrap;
+  color: #e0e0e0;
+  max-width: 80%; /* Limit text width */
+  text-align: center; /* Centered text */
+  margin: 0 auto;
+}
+
+.correct-char {
+  color: #fff; /* White for correctly typed text */
+  font-size: 2rem;
+}
+
+.incorrect-char {
+  color: #666; /* Dimmed color for untyped text */
+  font-size: 2rem;
+}
+
+.page-numbers {
+  position: absolute;
+  bottom: 20px;
+  right: 30px;
+  font-size: 1.5rem; /* Subtle size for page counter */
+  color: #666; /* Match color with untyped text */
+  font-family: "Courier New", Courier, monospace; /* Keep it consistent */
+}
+
+.close-button {
+  position: absolute;
+  top: 25px;
+  right: 30px;
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0;
+  transition: color 0.2s ease-in-out;
+}
+
+.close-button:hover {
+  color: #ff5f56;
+  background-color: transparent;
+}
